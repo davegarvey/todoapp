@@ -20,7 +20,9 @@ func checkAuthZ(req auth.AuthZENRequest) (bool, error) {
 	log.Printf("checkAuthZ called with request: %+v\n", req)
 	pdpURL := os.Getenv("AUTHZEN_PDP_URL")
 	if pdpURL == "" {
-		return false, fmt.Errorf("AUTHZEN_PDP_URL not set")
+		authzen_url_default := "http://localhost:9081"
+		log.Printf("AUTHZEN_PDP_URL not set. Defaulting to default value: %s\n", authzen_url_default)
+		pdpURL = authzen_url_default
 	}
 
 	jsonBody, err := json.Marshal(req)
