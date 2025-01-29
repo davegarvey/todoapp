@@ -15,7 +15,7 @@ func main() {
 	r.HandleFunc("/access/v1/evaluation", evaluationHandler).Methods("POST")
 	r.HandleFunc("/access/v1/evaluations", evaluationsHandler).Methods("POST")
 
-	port := "8081"
+	port := "9081"
 	log.Printf("PDP Server starting on port %s", port)
 	log.Fatal(http.ListenAndServe(":"+port, r))
 }
