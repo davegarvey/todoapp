@@ -1,24 +1,32 @@
-# Todo App
+# AuthZEN PDP & Todo App
 
-## Start the Servers
+This repository contains two applications that demonstrate the functionality of the AuthZEN Policy Decision Point (PDP) alongside a simple Todo app. The Todo app utilises the AuthZEN PDP to enforce fine-grained authorisation rules.
 
-### Run the PDP Server
+## Overview
+
+This repository is designed to be used alongside an AuthZEN Policy Enforcement Point (PEP) service, such as an API gateway, which integrates with the AuthZEN PDP to enforce medium-grained authorisation.
+
+For more details, refer to [this document](https://hackmd.io/ecYxP6uxSCm5X0RexkAM2g?view), which explains how the AuthZEN PDP and PEP work with the Todo app and an API gateway.
+
+## Setup
+
+### Running the PDP Server
+To start the PDP server, run:
 ```bash
 go run cmd/pdp/main.go
 ```
+The PDP server will start on port **9081**.
 
-The PDP server runs on port 8081
-
-### Run the Todo App 
+### Running the Todo App
+To start the Todo app, run:
 ```bash
 go run cmd/server/main.go
 ```
-
-The Todo app runs on port 8080
+The Todo app will start on port **9080**.
 
 ## Example JWT Tokens
 
-Use these JWT tokens to represent the users:
+Use the following JWT tokens to simulate different users. These tokens can be used in API requests for authorisation.
 
 - **Rick Sanchez:**
   ```
@@ -45,11 +53,11 @@ Use these JWT tokens to represent the users:
   eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJDaVJtWkRRMk1UUmtNeTFqTXpsaExUUTNPREV0WWpkaVpDMDRZamsyWmpWaE5URXdNR1FTQld4dlkyRnMiLCJpYXQiOjE1MTYyMzkwMjJ9.O9O5hOwLn4iu41fyEbQKsSxKn8cpBaaOrRnIA_QMYlA
   ```
 
-## Example Requests
+## Example API Requests
 
 ### Create a Todo
 ```bash
-curl -X POST http://localhost:8080/todos \
+curl -X POST http://localhost:9080/todos \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer <your-jwt-token>" \
 -d '{
@@ -64,19 +72,19 @@ curl -X POST http://localhost:8080/todos \
 
 ### List Todos
 ```bash
-curl http://localhost:8080/todos \
+curl http://localhost:9080/todos \
 -H "Authorization: Bearer <your-jwt-token>"
 ```
 
-### Get a User
+### Retrieve a User
 ```bash
-curl http://localhost:8080/users/{userID} \
+curl http://localhost:9080/users/{userID} \
 -H "Authorization: Bearer <your-jwt-token>"
 ```
 
 ### Update a Todo
 ```bash
-curl -X PUT http://localhost:8080/todos/{id} \
+curl -X PUT http://localhost:9080/todos/{id} \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer <your-jwt-token>" \
 -d '{
@@ -91,8 +99,8 @@ curl -X PUT http://localhost:8080/todos/{id} \
 
 ### Delete a Todo
 ```bash
-curl -X DELETE http://localhost:8080/todos/{id} \
+curl -X DELETE http://localhost:9080/todos/{id} \
 -H "Authorization: Bearer <your-jwt-token>"
 ```
 
-Replace `<your-jwt-token>` with a valid JWT token and `{userID}` and `{id}` with the appropriate values.
+Replace `<your-jwt-token>` with a valid JWT token, `{userID}` with the relevant user ID, and `{id}` with the corresponding Todo item ID.
